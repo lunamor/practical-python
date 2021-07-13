@@ -59,3 +59,19 @@ def calc_gain_loss(portfolio_file, current_values_file):
         new_portfolio_value += s["shares"] * current_prices[s["name"]]
     return old_portfolio_value - new_portfolio_value
     
+
+# Exercise 2.9: Collecting Data
+    
+def make_report(list_stocks, dict_prices):
+    'takes a list of stocks and dictionary of prices and returns a list of tuples containing the name, # of shares, prices, and change'
+    rows = []
+    for stock in list_stocks:
+        name = stock["name"]
+        shares = stock["shares"]
+        old_price = stock["price"]
+        current_price = dict_prices[name]
+        change = current_price - old_price
+        rows.append((name, shares, current_price, change))
+    return rows
+        
+    
