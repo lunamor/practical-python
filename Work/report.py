@@ -84,7 +84,7 @@ for name, shares, price, change in report:
 '''
 
 # Exercise 2.11: Adding some headers
-
+'''
 headers = ('Name', 'Shares', 'Price', 'Change')
 print("%10s %10s %10s %10s" %headers)
 print(('-' * 10 + ' ') * len(headers))
@@ -94,3 +94,17 @@ prices = read_prices("Data/prices.csv")
 report = make_report(portfolio, prices)
 for name, shares, price, change in report:
      print(f"{name:>10s} {shares:>10d} {price:>10.2f} {change:>10.2f}")
+'''
+
+# Exercise 2.12: Formatting Challenge
+
+headers = ('Name', 'Shares', 'Price', 'Change')
+print("%10s %10s %10s %10s" %headers)
+print(('-' * 10 + ' ') * len(headers))
+
+portfolio = read_portfolio("Data/portfolio.csv")
+prices = read_prices("Data/prices.csv")
+report = make_report(portfolio, prices)
+for name, shares, price, change in report:
+    formatted_price = "$" + f"{price:0.2f}"
+    print(f"{name:>10s} {shares:>10d} {formatted_price:>10s} {change:>10.2f}")
