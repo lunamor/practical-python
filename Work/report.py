@@ -42,7 +42,7 @@ def read_prices(filename):
             try:
                 prices[row[0]] = float(row[1])
             except IndexError:
-                print("Error: no such index")
+                errorStr = "Error: no such index"
     return prices
 
 # Exercise 2.7: Fingin out if you can retire
@@ -75,9 +75,22 @@ def make_report(list_stocks, dict_prices):
     return rows
         
 # Exercise 2.10: Printing a formatted table
+'''
+portfolio = read_portfolio("Data/portfolio.csv")
+prices = read_prices("Data/prices.csv")
+report = make_report(portfolio, prices)
+for name, shares, price, change in report:
+     print(f"{name:>10s} {shares:>10d} {price:>10.2f} {change:>10.2f}")
+'''
+
+# Exercise 2.11: Adding some headers
+
+headers = ('Name', 'Shares', 'Price', 'Change')
+print("%10s %10s %10s %10s" %headers)
+print(('-' * 10 + ' ') * len(headers))
 
 portfolio = read_portfolio("Data/portfolio.csv")
 prices = read_prices("Data/prices.csv")
 report = make_report(portfolio, prices)
 for name, shares, price, change in report:
-     print(f"{name:>10s}{shares:>10d}{price:>10.2f}{change:>10.2f}")
+     print(f"{name:>10s} {shares:>10d} {price:>10.2f} {change:>10.2f}")
