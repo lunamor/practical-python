@@ -73,7 +73,7 @@ print("total cost:", cost)
 '''
 
 # Exercise 1.33: Reading from the command line
-
+'''
 import sys
 import csv
 def portfolio_cost(filename):
@@ -96,3 +96,30 @@ else:
     filename = 'Data/portfolio.csv'
 cost = portfolio_cost(filename)
 print('Total cost:', cost)
+'''
+
+# Exercise 2.15: A practical enumerate() example
+
+import sys
+import csv
+def portfolio_cost(filename):
+    'compute the cost of shares'
+    print('Exercise 2.15')
+    total = 0.00
+    with open(filename, "rt") as f:
+        rows = csv.reader(f)
+        headers = next(rows)
+        for i, row in enumerate(rows, start = 1):
+            try:
+                cost = int(row[1]) * float(row[2])
+                total = total + cost
+            except ValueError:
+                print(f"Row {i}: Couldn't convert: {row}")
+    return total
+if len(sys.argv) == 2:
+    filename = sys.argv[1]
+else:
+    filename = 'Data/portfolio.csv'
+cost = portfolio_cost(filename)
+print('Total cost:', cost)
+
