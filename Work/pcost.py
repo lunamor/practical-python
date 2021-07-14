@@ -99,7 +99,7 @@ print('Total cost:', cost)
 '''
 
 # Exercise 2.15: A practical enumerate() example
-
+'''
 import sys
 import csv
 def portfolio_cost(filename):
@@ -122,4 +122,30 @@ else:
     filename = 'Data/portfolio.csv'
 cost = portfolio_cost(filename)
 print('Total cost:', cost)
+'''
 
+# Exercise 2.16: Using the zip() function
+
+import sys
+import csv
+def portfolio_cost(filename):
+    'compute the cost of shares'
+    print("Exercise 2.16")
+    total = 0.0
+    with open(filename, "rt") as f:
+        rows = csv.reader(f)
+        headers = next(rows)
+        for rownu, row in enumerate(rows):
+            record = dict(zip(headers, row))
+            try:
+                cost = int(record["shares"]) * float(record["price"])
+                total += cost
+            except ValueError:
+                print(f"Row {rowno}: Couldn't convert: {row}")
+    return total
+if len(sys.argv) == 2:
+    filename = sys.argv[1]
+else:
+    filename = "Data/portfolio.csv"
+cost = portfolio_cost(filename)
+print("Total cost:", cost)
