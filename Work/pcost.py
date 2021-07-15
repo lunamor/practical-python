@@ -1,7 +1,7 @@
 # pcost.py
 #
 # Exercise 1.27
-
+'''
 total = 0.00
 with open("Data/portfolio.csv", "rt") as f:
     print("Exercise 1.27")
@@ -11,7 +11,7 @@ with open("Data/portfolio.csv", "rt") as f:
         cost = int(row[1]) * float(row[2][0:-1])
         total = total + cost
 print(f"Total cost {total:0.2f}")
-
+'''
 
 # Exercise 1.30
 '''
@@ -125,7 +125,7 @@ print('Total cost:', cost)
 '''
 
 # Exercise 2.16: Using the zip() function
-
+'''
 import sys
 import csv
 def portfolio_cost(filename):
@@ -142,6 +142,27 @@ def portfolio_cost(filename):
                 total += cost
             except ValueError:
                 print(f"Row {rowno}: Couldn't convert: {row}")
+    return total
+if len(sys.argv) == 2:
+    filename = sys.argv[1]
+else:
+    filename = "Data/portfolio.csv"
+cost = portfolio_cost(filename)
+print("Total cost:", cost)
+'''
+
+# Exercise 3.14: Using more library imports
+
+import sys
+import csv
+from report import read_portfolio
+
+def portfolio_cost(filename):
+    'compute the cost of shares'
+    total = 0.0
+    portfolio = read_portfolio(filename)
+    for holding in portfolio:
+        total += holding["shares"] * holding["price"]
     return total
 if len(sys.argv) == 2:
     filename = sys.argv[1]
