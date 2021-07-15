@@ -175,18 +175,23 @@ def parse_csv(filename, select = None, types = None, has_headers = True, delimit
         else:
             indices = []
         records = []
-        for row in rows:
-            if not row: 	# Skip row with no data
-                continue
-            # Filter the row if specific columns were selected
-            if indices:
-                row = [row[index] for index in indices]
-            if types:
-                row = [func(val) for func, val in zip(types, row)]
-            if has_headers:
-                # Make a dictionary
-                record = dict(zip(headers, row))
-            else:
-                record = tuple(row)
-            records.append(record)
+        for rowno, row in enumerate(rows, 1):
+            try:
+                if not row: 	# Skip row with no data
+                    continue
+                # Filter the row if specific columns were selected
+                if indices:
+                    row = [row[index] for index in indices]
+                if types:
+                        row = [func(val) for func, val in zip(types, row)]
+                if has_headers:
+                    # Make a dictionary
+                    record = dict(zip(headers, row))
+                else:
+                    record = tuple(row)
+                records.append(record)
+            except ValueError as e:
+                print("Row", rowno, ": Couldn't convert", row)
+                print("Row", rowno, ":", e)
+        
     return records
