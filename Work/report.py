@@ -274,11 +274,11 @@ def print_report(report):
         formatted_price = "$" + f"{price:0.2f}"
         print(f"{name:>10s} {shares:>10d} {formatted_price:>10s} {change:>10.2f}")
 
-def report_portfolio(portfolio_filename, prices_filename):
+def portfolio_report(portfolio_filename, prices_filename):
     'read portfolio and prioces, make and print report'
     portfolio = read_portfolio(portfolio_filename)
     prices = read_prices(prices_filename)
     report = make_report(portfolio, prices)
     print_report(report)
 
-report_portfolio("Data/portfolio.csv", "Data/prices.csv")
+portfolio_report("Data/portfolio.csv", "Data/prices.csv")
