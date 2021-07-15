@@ -251,6 +251,7 @@ def parse_csv(lines, select = None, types = None, has_headers = True, delimiter 
     # Raise exception if both the select and the has_headers=False arguments are passed
     if select and (not has_headers):
         raise RuntimeError("select argument requires column headers")
+    # Raise exception if lines is a str
     if type(lines) is str:
         raise ValueError("Should not pass in a string")
     rows = csv.reader(lines, delimiter = delimiter)
