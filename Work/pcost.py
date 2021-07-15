@@ -152,9 +152,8 @@ print("Total cost:", cost)
 '''
 
 # Exercise 3.14: Using more library imports
-
+'''
 import sys
-import csv
 from report import read_portfolio
 
 def portfolio_cost(filename):
@@ -170,3 +169,46 @@ else:
     filename = "Data/portfolio.csv"
 cost = portfolio_cost(filename)
 print("Total cost:", cost)
+'''
+
+# Exercise 3.15: main() functions
+
+from report import read_portfolio
+
+def portfolio_cost(filename):
+    'compute the cost of shares'
+    total = 0.0
+    portfolio = read_portfolio(filename)
+    for holding in portfolio:
+        total += holding["shares"] * holding["price"]
+    return total
+
+def main(args):
+    if len(args) != 2:
+        raise SystemExit('Usage: %s portfile pricefile' % args[0])
+    cost = portfolio_cost(args[1])
+    print("Total cost:", cost)
+
+
+# Exercise 3.16: Making Scripts
+
+import sys
+from report import read_portfolio
+
+def portfolio_cost(filename):
+    'compute the cost of shares'
+    total = 0.0
+    portfolio = read_portfolio(filename)
+    for holding in portfolio:
+        total += holding["shares"] * holding["price"]
+    return total
+
+def main(args):
+    if len(args) != 2:
+        raise SystemExit('Usage: %s portfile pricefile' % args[0])
+    cost = portfolio_cost(args[1])
+    print("Total cost:", cost)
+
+if __name__ == "__main__":
+    import sys
+    main(sys.argv)

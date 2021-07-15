@@ -285,7 +285,7 @@ portfolio_report("Data/portfolio.csv", "Data/prices.csv")
 '''
 
 # Exercise 3.12: Using your library module
-
+'''
 from fileparse import parse_csv
 
 def read_portfolio(filename):
@@ -324,3 +324,97 @@ def portfolio_report(portfolio_filename, prices_filename):
     print_report(report)
 
 portfolio_report("Data/portfolio.csv", "Data/prices.csv")
+'''
+
+# Exercise 3.15: main() functions
+'''
+from fileparse import parse_csv
+
+def read_portfolio(filename):
+    'store portfolio in a list of dictionaries'
+    portfolio = parse_csv(filename, select=["name", "shares", "price"], types=[str, int, float], has_headers=True)
+    return portfolio
+
+def read_prices(filename):
+    'reads a set of prices into a dictionary'
+    prices = dict(parse_csv(filename, types=[str, float], has_headers=False))
+    return prices
+
+def make_report(list_stocks, dict_prices):
+    'takes a list of stocks and dictionary of prices and returns a list of tuples containing the name, # of shares, prices, and change'
+    rows = []
+    for stock in list_stocks:
+        name = stock["name"]
+        shares = stock["shares"]
+        old_price = stock["price"]
+        current_price = dict_prices[name]
+        change = current_price - old_price
+        rows.append((name, shares, current_price, change))
+    return rows
+
+def print_report(report):
+    'print a report of the portfolio'
+    for name, shares, price, change in report:
+        formatted_price = "$" + f"{price:0.2f}"
+        print(f"{name:>10s} {shares:>10d} {formatted_price:>10s} {change:>10.2f}")
+
+def portfolio_report(portfolio_filename, prices_filename):
+    'read portfolio and prioces, make and print report'
+    portfolio = read_portfolio(portfolio_filename)
+    prices = read_prices(prices_filename)
+    report = make_report(portfolio, prices)
+    print_report(report)
+
+def main(args):
+    if len(args) != 3:
+        raise SystemExit('Usage: %s portfile pricefile' % args[0])
+    portfolio_report(args[1], args[2])
+'''
+
+# Exercise 3.16: Making Scripts
+
+from fileparse import parse_csv
+
+def read_portfolio(filename):
+    'store portfolio in a list of dictionaries'
+    portfolio = parse_csv(filename, select=["name", "shares", "price"], types=[str, int, float], has_headers=True)
+    return portfolio
+
+def read_prices(filename):
+    'reads a set of prices into a dictionary'
+    prices = dict(parse_csv(filename, types=[str, float], has_headers=False))
+    return prices
+
+def make_report(list_stocks, dict_prices):
+    'takes a list of stocks and dictionary of prices and returns a list of tuples containing the name, # of shares, prices, and change'
+    rows = []
+    for stock in list_stocks:
+        name = stock["name"]
+        shares = stock["shares"]
+        old_price = stock["price"]
+        current_price = dict_prices[name]
+        change = current_price - old_price
+        rows.append((name, shares, current_price, change))
+    return rows
+
+def print_report(report):
+    'print a report of the portfolio'
+    for name, shares, price, change in report:
+        formatted_price = "$" + f"{price:0.2f}"
+        print(f"{name:>10s} {shares:>10d} {formatted_price:>10s} {change:>10.2f}")
+
+def portfolio_report(portfolio_filename, prices_filename):
+    'read portfolio and prioces, make and print report'
+    portfolio = read_portfolio(portfolio_filename)
+    prices = read_prices(prices_filename)
+    report = make_report(portfolio, prices)
+    print_report(report)
+
+def main(args):
+    if len(args) != 3:
+        raise SystemExit('Usage: %s portfile pricefile' % args[0])
+    portfolio_report(args[1], args[2])
+
+if __name__ == "__main__":
+    import sys
+    main(sys.argv)
