@@ -49,3 +49,15 @@ class HTMLTableFormatter(TableFormatter):
             print(f"<td>{d}</td>", end = "")
         print("</tr>", end = "")
         print()
+
+# Exercise 4.7: Polymorphism is Action
+
+def create_formatter(name):
+    if name == "txt":
+        return TextTableFormatter()
+    elif name == "csv":
+        return CSVTableFormatter()
+    elif name == "html":
+        return HTMLTableFormatter()
+    else:
+        raise RuntimeError(f"Unknown format {fmt}")
