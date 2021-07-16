@@ -61,3 +61,13 @@ def create_formatter(name):
         return HTMLTableFormatter()
     else:
         raise RuntimeError(f"Unknown format {fmt}")
+
+# Exercise 4.10: An example of using getattr()
+
+def print_table(data, colnames, formatter):
+    formatter.headings(colnames)
+    for stock in data:
+        formatter.row([str(getattr(stock, colname)) for colname in colnames])
+        
+        
+    
