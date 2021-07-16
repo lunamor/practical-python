@@ -664,7 +664,7 @@ if __name__ == "__main__":
 '''
 
 # Exercise 4.7: Polymorphism in Action
-
+'''
 from fileparse import parse_csv
 import stock
 import tableformat
@@ -716,6 +716,65 @@ def main(args):
     if len(args) != 3:
         raise SystemExit('Usage: %s portfile pricefile' % args[0])
     portfolio_report(args[1], args[2])
+
+if __name__ == "__main__":
+    import sys
+    main(sys.argv)
+'''
+
+# Exercise 4.8: Putting it all together
+
+from fileparse import parse_csv
+import stock
+import tableformat
+
+def read_portfolio(filename):
+    'store portfolio in a list of Stocks'
+    with open(filename) as f:
+        portfolio = parse_csv(f, select=["name", "shares", "price"], types=[str, int, float], has_headers=True)
+        stocks = [stock.Stock(s["name"], s["shares"], s["price"]) for s in portfolio]
+    return stocks
+
+def read_prices(filename):
+    'reads a set of prices into a dictionary'
+    with open(filename) as f:
+        prices = dict(parse_csv(f, types=[str, float], has_headers=False))
+    return prices
+
+def make_report(list_stocks, dict_prices):
+    'takes a list of stocks and dictionary of prices and returns a list of tuples containing the name, # of shares, prices, and change'
+    rows = []
+    for stock in list_stocks:
+        name = stock.name
+        shares = stock.shares
+        old_price = stock.price
+        current_price = dict_prices[name]
+        change = current_price - old_price
+        rows.append((name, shares, current_price, change))
+    return rows
+
+def print_report(reportdata, formatter):
+    'print a nicely formatted table from a list of (name, shares, price, change) tuples'
+    formatter.headings(["Name", "Shares", "Price", "Change"])
+    for name, shares, price, change in reportdata:
+        rowdata = [name, str(shares), f"{price:0.2f}", f"{change:0.2f}"]
+        formatter.row(rowdata)
+
+def portfolio_report(portfolio_filename, prices_filename, fmt = "txt"):
+    'Make a stock report given portfolio and price data files'
+    # Read data files
+    portfolio = read_portfolio(portfolio_filename)
+    prices = read_prices(prices_filename)
+    # Create a report data
+    report = make_report(portfolio, prices)
+    # Print it out
+    formatter = tableformat.create_formatter(fmt)
+    print_report(report, formatter)
+
+def main(args):
+    if len(args) != 4:
+        raise SystemExit('Usage: %s portfile pricefile format' % args[0])
+    portfolio_report(args[1], args[2], args[3])
 
 if __name__ == "__main__":
     import sys
