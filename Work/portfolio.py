@@ -53,7 +53,7 @@ class Portfolio:
         return total_shares 
 '''
 
-# Exercise 6.13: Generator Expressions
+# Exercise 6.14: Generator Expressions in Function Arguments
 
 class Portfolio:
     
