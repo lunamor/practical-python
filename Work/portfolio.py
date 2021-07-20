@@ -53,7 +53,7 @@ class Portfolio:
         return total_shares 
 '''
 
-# Exercise 6.3: Making a more proper container
+# Exercise 6.13: Generator Expressions
 
 class Portfolio:
     
