@@ -155,9 +155,13 @@ class Stock:
 # Exercise 7.8: Simplifying Function Calls
 
 from typedproperty import typedproperty
+from typedproperty import String
+from typedproperty import Integer
+from typedproperty import Float
+
 class Stock:
 
-    name = String(name)
+    name = String("name")
     shares = Integer("shares")
     price = Float("price")
 
